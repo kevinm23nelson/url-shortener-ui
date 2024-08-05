@@ -4,12 +4,18 @@ import { getUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
+
 function App () {
   const [urls, setUrls] = useState([]);
 
   useEffect(() => {
-
-  })
+    getUrls()
+    .then(fetchedUrls => {
+      if (fetchedUrls) {
+        setUrls(fetchedUrls)
+      }
+    })
+  }, [])
 
   return (
     <main className="App">
@@ -18,7 +24,7 @@ function App () {
         <UrlForm />
       </header>
 
-      <UrlContainer urls={"<<<Urls should go here>>>"}/>
+      <UrlContainer urls={urls}/>
     </main>
   );
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import './UrlContainer.css';
-import '../Card/Card'
+import Card from '../Card/Card'
 
 function UrlContainer({urls}){
-  const urlCards = urls.urls.map(url => {
+  const urlCards = urls.map(url => {
     return (
       <Card
         long_url={url.long_url}

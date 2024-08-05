@@ -1,0 +1,10 @@
+.url-form {
+    margin: auto;
+}
+
+.url-form input, button {
+    margin: 5px;
+    width: 30%;
+    border: 2px solid black;
+
+}

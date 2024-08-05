@@ -26,7 +26,7 @@ function UrlForm({ shortenUrl }) {
   }
 
   return (
-    <form>
+    <form className="url-form">
       <input
         required
         type='text'

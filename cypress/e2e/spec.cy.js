@@ -38,4 +38,21 @@ describe('URL Shortener Page', () => {
       .get('.urls-card').first().should('contain.text', 'Awesome photo')
       .get('.urls-card').last().should('contain.text', 'Cat photo')
   })
+
+  it('should display user error handling if the user tries to submit an incomplete field', () => {
+    cy.get('form').within(() => {
+      cy.get('input[name="title"]').should('have.attr', 'placeholder', 'Title...')
+      cy.get('input[name="long_url"]').should('have.attr', 'placeholder', 'URL to Shorten...')
+      cy.get('button').should('contain.text', 'Shorten Please!').click()
+      cy.get('.error').should('contain.text', "All input fields need to be filled out.")
+      cy.get('input[name="title"]').type('Dog photo')
+      cy.get('button').should('contain.text', 'Shorten Please!').click()
+      cy.get('.error').should('contain.text', "All input fields need to be filled out.")
+      cy.get('input[name="title"]').clear()
+      cy.get('input[name="long_url"]').type('https://images.unsplash.com/photo-1531898418865-480b7090470f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80')
+      cy.get('button').should('contain.text', 'Shorten Please!').click()
+      cy.get('.error').should('contain.text', "All input fields need to be filled out.")
+      cy.get('input[name="long_url"]').clear()
+    })
+  })
 })

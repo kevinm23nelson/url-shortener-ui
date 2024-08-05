@@ -33,7 +33,6 @@ function App() {
         <h1>URL Shortener</h1>
         <UrlForm shortenUrl={shortenUrl}/>
       </header>
-
       <UrlContainer urls={urls} />
     </main>
   );

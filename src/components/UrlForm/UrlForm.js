@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 function UrlForm({ shortenUrl }) {
   const [title, setTitle] = useState('');
   const [long_url, setLong_Url] = useState('');
+  const [errorMessage, setErrorMessage] = useState('')
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -15,8 +16,9 @@ function UrlForm({ shortenUrl }) {
       }
       shortenUrl(newUrl)
       clearInputs()
+      setErrorMessage('')
     } else {
-      console.log('Form validation has failed.')
+      setErrorMessage('All input fields need to be filled out.')
     }
   }
 
@@ -45,6 +47,7 @@ function UrlForm({ shortenUrl }) {
       <button onClick={handleSubmit}>
         Shorten Please!
       </button>
+      {errorMessage && <p className="error">{errorMessage}</p>}
     </form>
   )
 }

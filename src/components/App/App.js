@@ -1,30 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, postURL } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
 
-function App () {
+function App() {
   const [urls, setUrls] = useState([]);
 
   useEffect(() => {
     getUrls()
-    .then(fetchedUrls => {
-      if (fetchedUrls) {
-        setUrls(fetchedUrls)
-      }
-    })
+      .then(fetchedUrls => {
+        if (fetchedUrls) {
+          setUrls(fetchedUrls)
+        }
+      })
   }, [])
+
+  function shortenUrl(newUrl) {
+    postURL(newUrl)
+      .then(postedUrl => {
+        setUrls([...urls, postedUrl])
+      })
+      .catch(error => {
+        console.log('Error posting URL')
+      })
+  }
 
   return (
     <main className="App">
       <header>
         <h1>URL Shortener</h1>
-        <UrlForm />
+        <UrlForm shortenUrl={shortenUrl}/>
       </header>
 
-      <UrlContainer urls={urls}/>
+      <UrlContainer urls={urls} />
     </main>
   );
 }

@@ -1,40 +1,53 @@
 import React, { useState } from 'react';
 
-function UrlForm() {
-  const [title, setTitle] = useState('');
-  const [urlToShorten, setUrlToShorten] = useState('');
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    clearInputs();
+function UrlForm({ shortenUrl }) {
+  const [title, setTitle] = useState('');
+  const [long_url, setLong_Url] = useState('');
+  const [errorMessage, setErrorMessage] = useState('')
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    if (title && long_url) {
+      const newUrl = {
+        id: Date.now(),
+        title,
+        long_url
+      }
+      shortenUrl(newUrl)
+      clearInputs()
+      setErrorMessage('')
+    } else {
+      setErrorMessage('All input fields need to be filled out.')
+    }
   }
 
   const clearInputs = () => {
     setTitle('');
-    setUrlToShorten('');
+    setLong_Url('');
   }
 
   return (
-    <form>
+    <form className="url-form">
       <input
+        required
         type='text'
         placeholder='Title...'
         name='title'
         value={title}
-        // onChange={e => }
+        onChange={event => setTitle(event.target.value)}
       />
-
       <input
         type='text'
         placeholder='URL to Shorten...'
-        name='title'
-        value={title}
-        // onChange={e => }
+        name='long_url'
+        value={long_url}
+        onChange={event => setLong_Url(event.target.value)}
       />
-
-      <button onClick={e => handleSubmit(e)}>
+      <button onClick={handleSubmit}>
         Shorten Please!
       </button>
+      {errorMessage && <p className="error">{errorMessage}</p>}
     </form>
   )
 }

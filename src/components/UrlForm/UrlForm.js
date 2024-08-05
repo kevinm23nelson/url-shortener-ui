@@ -1,42 +1,52 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 
-// function UrlForm() {
-//   const [title, setTitle] = useState('');
-//   const [urlToShorten, setUrlToShorten] = useState('');
 
-//   const handleSubmit = e => {
-//     e.preventDefault();
-//     clearInputs();
-//   }
+function UrlForm({ shortenUrl }) {
+  const [title, setTitle] = useState('');
+  const [long_url, setLong_Url] = useState('');
 
-//   const clearInputs = () => {
-//     setTitle('');
-//     setUrlToShorten('');
-//   }
+  function handleSubmit(event) {
+    event.preventDefault()
+    if (title && long_url) {
+      const newUrl = {
+        id: Date.now(),
+        title,
+        long_url
+      }
+      shortenUrl(newUrl)
+      clearInputs()
+    } else {
+      console.log('Form validation has failed.')
+    }
+  }
 
-//   return (
-//     <form>
-//       <input
-//         type='text'
-//         placeholder='Title...'
-//         name='title'
-//         value={title}
-//         // onChange={e => }
-//       />
+  const clearInputs = () => {
+    setTitle('');
+    setLong_Url('');
+  }
 
-//       <input
-//         type='text'
-//         placeholder='URL to Shorten...'
-//         name='title'
-//         value={title}
-//         // onChange={e => }
-//       />
+  return (
+    <form>
+      <input
+        required
+        type='text'
+        placeholder='Title...'
+        name='title'
+        value={title}
+        onChange={event => setTitle(event.target.value)}
+      />
+      <input
+        type='text'
+        placeholder='URL to Shorten...'
+        name='long_url'
+        value={long_url}
+        onChange={event => setLong_Url(event.target.value)}
+      />
+      <button onClick={handleSubmit}>
+        Shorten Please!
+      </button>
+    </form>
+  )
+}
 
-//       <button onClick={e => handleSubmit(e)}>
-//         Shorten Please!
-//       </button>
-//     </form>
-//   )
-// }
-
-// export default UrlForm;
+export default UrlForm;
